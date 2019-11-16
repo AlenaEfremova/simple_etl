@@ -133,6 +133,5 @@ $ python etl.py -i examples/csv_data_1.csv examples/csv_data_2.csv examples/json
 
 ## Possible improvement options
 
-* To work with other file types, it is necessary to add the possibility of processing the corresponding file type to the `open_file()` function.
 * Implement testing methods in the `test_etl.py` module.
 * If a file of a very large size and is not reasonable to load into the RAM, you should reorganize the code for processing the file segments.
