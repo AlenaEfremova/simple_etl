@@ -7,22 +7,22 @@ from xml.etree import ElementTree
 class Element:
     def __init__(self, file_name):
         self.file_name = file_name
-        self._list_of_dicts = list()
+        self.list_of_dicts = list()
         return
 
     def keys_of_dicts(self):
-        return self._list_of_dicts[0].keys()
+        return self.list_of_dicts[0].keys()
 
     def read_csv(self):
         with open(self.file_name, 'r') as csv_file:
             reader_csv = csv.DictReader(csv_file)
-            self._list_of_dicts.extend(list(reader_csv))
+            self.list_of_dicts.extend(list(reader_csv))
         return
 
     def read_json(self):
         with open(self.file_name, newline='') as json_file:
             reader_json = json.load(json_file)
-            self._list_of_dicts.extend(reader_json['fields'])
+            self.list_of_dicts.extend(reader_json['fields'])
         return
 
     def read_xml(self):
@@ -32,7 +32,7 @@ class Element:
             dict_xml = dict()
             for obj in obs:
                 dict_xml[obj.attrib['name']] = obj.find('value').text
-            self._list_of_dicts.append(dict_xml)
+            self.list_of_dicts.append(dict_xml)
         return
 
     @staticmethod
