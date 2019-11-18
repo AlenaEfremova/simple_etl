@@ -10,30 +10,42 @@ class Element:
         self.list_of_dicts = list()
         return
 
-    def keys_of_dicts(self):
-        return self.list_of_dicts[0].keys()
-
     def read_csv(self):
         with open(self.file_name, 'r') as csv_file:
             reader_csv = csv.DictReader(csv_file)
-            self.list_of_dicts.extend(list(reader_csv))
+            result = list(reader_csv)
+            if len(result) == 0:
+                print("\nCSV file is empty")
+            self.list_of_dicts.extend(result)
         return
 
     def read_json(self):
         with open(self.file_name, newline='') as json_file:
-            reader_json = json.load(json_file)
-            self.list_of_dicts.extend(reader_json['fields'])
+            try:
+                reader_json = json.load(json_file)
+                self.list_of_dicts.extend(reader_json['fields'])
+            except ValueError as err:
+                print('\nError JSON:  {}'.format(err))
         return
 
     def read_xml(self):
-        tree = ElementTree.parse(self.file_name)
-        root = tree.getroot()
-        for obs in root.findall(".//objects"):
-            dict_xml = dict()
-            for obj in obs:
-                dict_xml[obj.attrib['name']] = obj.find('value').text
-            self.list_of_dicts.append(dict_xml)
+        try:
+            tree = ElementTree.parse(self.file_name)
+            root = tree.getroot()
+            for obs in root.findall(".//objects"):
+                dict_xml = dict()
+                for obj in obs:
+                    dict_xml[obj.attrib['name']] = obj.find('value').text
+                self.list_of_dicts.append(dict_xml)
+        except ElementTree.ParseError as err:
+            print('\nError parsing XML:  {}'.format(err))
         return
+
+    def keys_of_dicts(self):
+        if len(self.list_of_dicts) == 0:
+            return list()
+        else:
+            return self.list_of_dicts[0].keys()
 
     @staticmethod
     def write_tsv(list_of_dicts, pathname):
@@ -108,7 +120,7 @@ class ListElements:
                     try:
                         value = int(value)
                     except ValueError as err:
-                        print('The {} column contains {}'.format(key, err))
+                        print('\nError in string conversion:  {}'.format(err))
                         value = 0
                 new_dct[key] = value
             converted_list.append(new_dct)

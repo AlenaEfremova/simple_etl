@@ -133,5 +133,7 @@ $ python etl.py -i examples/csv_data_1.csv examples/csv_data_2.csv examples/json
 
 ## Possible improvement options
 
-* Implement testing methods in the `test_etl.py` module.
-* If a file of a very large size and is not reasonable to load into the RAM, you should reorganize the code for processing the file segments.
+* Implement testing of all methods of the ListElements class in the test_etl_cls_list_elements.py` module.
+* To work with other file types, you can inherit the Element class to add a method for processing the corresponding file type.
+Also override the process_elements() method of the ListElements class.
+ 
