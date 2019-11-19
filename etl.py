@@ -80,7 +80,8 @@ class ListElements:
         return
 
     def list_intersection(self):
-        """Looking for intersection of keys that are present in all
+        """
+        Looking for intersection of keys that are present in all
         dictionary lists, generates one list of dictionaries with
         these keys and their values
         """
@@ -93,13 +94,19 @@ class ListElements:
         return res_list_of_dicts
 
     @staticmethod
-    def sorted_list_of_dicts(res_list_of_dicts, sorting_key):
+    def sorted_list_of_dicts(res_list_of_dicts, sorting_key=''):
         """Sorts by dictionary key, and then by the values of the specified key"""
-        key_sorted_dicts = [{k: dct[k] for k in sorted(dct)} for dct in res_list_of_dicts]
+        keys_of_dict = res_list_of_dicts[0].keys()
+        if sorting_key == '' or sorting_key not in keys_of_dict:
+            sorting_key = sorted(keys_of_dict)[0]
+            key_sorted_dicts = [{k: dct[k] for k in sorted(dct)} for dct in res_list_of_dicts]
+        else:
+            key_sorted_dicts = [{k: dct[k] for k in sorted(dct)} for dct in res_list_of_dicts]
         return sorted(key_sorted_dicts, key=lambda i: i[sorting_key])
 
     def key_separation(self, list_of_keys):
-        """Divides the list of keys into two, a list in which the key names begin with a 'D'
+        """
+        Divides the list of keys into two, a list in which the key names begin with a 'D'
         and a list where the key names begin with an 'M'
         """
         for key in list_of_keys:
@@ -127,7 +134,8 @@ class ListElements:
         return converted_list
 
     def dictionary_comparison(self, list_of_dicts):
-        """Sums the values corresponding to the specified dictionary keys
+        """
+        Sums the values corresponding to the specified dictionary keys
         by unique combinations of dictionary values
         and forms a new list of dictionaries
         """
@@ -173,7 +181,7 @@ if __name__ == "__main__":
     list_elements.process_elements()
 
     res_list_intersection = list_elements.list_intersection()
-    sorted_list_by_value = list_elements.sorted_list_of_dicts(res_list_intersection, 'D1')
+    sorted_list_by_value = list_elements.sorted_list_of_dicts(res_list_intersection)
     if args_parse.out_basic is not None:
         Element.write_tsv(sorted_list_by_value, args_parse.out_basic.name)
     else:

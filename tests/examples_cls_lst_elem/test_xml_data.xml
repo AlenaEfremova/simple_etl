@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+    <objects>
+        <object name="D1">
+            <value>a</value>
+        </object>
+        <object name="D2">
+            <value>a</value>
+        </object>
+        <object name="M1">
+            <value>1</value>
+        </object>
+        <object name="M2">
+            <value>1</value>
+        </object>
+    </objects>
+</root>

@@ -1,22 +1,24 @@
 import unittest
-import etl
 import collections
 import tempfile
 import filecmp
 import os
+import etl
+
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class TestElement(unittest.TestCase):
     """Testing all methods of the Element class"""
 
     def setUp(self):
-        self.file_name_csv = 'test_examples/test_csv_data.csv'
-        self.file_name_csv_empty = 'test_examples/test_csv_data_empty.csv'
-        self.file_name_json = 'test_examples/test_json_data.json'
-        self.file_name_json_empty = 'test_examples/test_json_data_empty.json'
-        self.file_name_xml = 'test_examples/test_xml_data.xml'
-        self.file_name_xml_empty = 'test_examples/test_xml_data_empty.xml'
-        self.expected_test_write_tsv = 'test_examples/expected_test_write_tsv.tsv'
+        self.file_name_csv = os.path.join(THIS_DIR, 'examples_cls_elem/test_csv_data.csv')
+        self.file_name_csv_empty = os.path.join(THIS_DIR, 'examples_cls_elem/test_csv_data_empty.csv')
+        self.file_name_json = os.path.join(THIS_DIR, 'examples_cls_elem/test_json_data.json')
+        self.file_name_json_empty = os.path.join(THIS_DIR, 'examples_cls_elem/test_json_data_empty.json')
+        self.file_name_xml = os.path.join(THIS_DIR, 'examples_cls_elem/test_xml_data.xml')
+        self.file_name_xml_empty = os.path.join(THIS_DIR, 'examples_cls_elem/test_xml_data_empty.xml')
+        self.expected_test_write_tsv = os.path.join(THIS_DIR, 'examples_cls_elem/expected_test_write_tsv.tsv')
 
     def test_read_csv(self):
         """
@@ -113,7 +115,7 @@ class TestElement(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tempdir:
             path = os.path.join(tempdir, 'given_test_write_tsv.tsv')
             etl.Element.write_tsv([{'D1': 'a', 'M1': 0}, {'D1': 'b', 'M1': 1}], path)
-            self.assertTrue(filecmp.cmp(path, 'test_examples/expected_test_write_tsv.tsv', shallow=False),
+            self.assertTrue(filecmp.cmp(path, self.expected_test_write_tsv, shallow=False),
                             'The contents of the files do not match')
 
 

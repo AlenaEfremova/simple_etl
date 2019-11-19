@@ -114,6 +114,12 @@ The app is written in the language
 
 * Python 3.7.5
 
+## Running Tests
+
+To run tests from the project root directory, run one of the following commands:
+* ```$ python -m unittest discover```
+* ```$ python -m unittest discover -v```
+
 ## Run
 
 To do this, you should run the command from the terminal in the simple_etl directory specifying the paths to the files to be processed.
@@ -133,7 +139,6 @@ $ python etl.py -i examples/csv_data_1.csv examples/csv_data_2.csv examples/json
 
 ## Possible improvement options
 
-* Implement testing of all methods of the ListElements class in the test_etl_cls_list_elements.py` module.
 * To work with other file types, you can inherit the Element class to add a method for processing the corresponding file type.
 Also override the process_elements() method of the ListElements class.
  
