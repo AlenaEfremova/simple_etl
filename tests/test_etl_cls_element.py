@@ -1,7 +1,7 @@
 import unittest
 import collections
 import tempfile
-import filecmp
+import io
 import os
 import etl
 
@@ -115,8 +115,8 @@ class TestElement(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tempdir:
             path = os.path.join(tempdir, 'given_test_write_tsv.tsv')
             etl.Element.write_tsv([{'D1': 'a', 'M1': 0}, {'D1': 'b', 'M1': 1}], path)
-            self.assertTrue(filecmp.cmp(path, self.expected_test_write_tsv, shallow=False),
-                            'The contents of the files do not match')
+            with io.open(path) as given_file, io.open(self.expected_test_write_tsv) as expected_file:
+                self.assertListEqual(list(given_file), list(expected_file))
 
 
 if __name__ == '__main__':
